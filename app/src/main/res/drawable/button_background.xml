@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="50dp"></corners> // rounded button
+            <solid android:color="#FDFDFE"></solid>
+            <size android:height="25dp"></size>       //height
+            <gradient android:startColor="#817b7d"
+                android:endColor="#c7c3c4"></gradient>  //Gradient color for the button
+        </shape>
+    </item>
+</selector>

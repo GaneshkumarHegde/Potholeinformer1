@@ -1,0 +1,4 @@
+#Mon Jun 11 22:08:47 IST 2018
+base.0=C\:\\Users\\WINDOWS\\Downloads\\Potholeinformer_v1\\Potholeinformer\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+path.0=classes.dex
+renamed.0=classes.dex

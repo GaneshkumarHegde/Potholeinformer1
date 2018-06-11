@@ -1,0 +1,5 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Pothole</string>
+    <string name="access_token" translatable="false">pk.eyJ1IjoiaGhhcnNoaXRoMTUiLCJhIjoiY2pmaDJybXkyMXFocjJ5cGtuendsb2M0eCJ9.hAIqA6DsybkAf9kFA8pYeg</string>
+
+</resources>

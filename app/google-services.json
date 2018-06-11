@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "50113688770",
+    "firebase_url": "https://potholeproject-c948d.firebaseio.com",
+    "project_id": "potholeproject-c948d",
+    "storage_bucket": "potholeproject-c948d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50113688770:android:cdce7012b90c45c0",
+        "android_client_info": {
+          "package_name": "com.project.hackathon.Potholeinformer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "50113688770-hda5bsstrdtr5h1qdrj0ifetuq02m16b.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "50113688770-hda5bsstrdtr5h1qdrj0ifetuq02m16b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvzBowAzvfj92EenXGyHwIW41YrNav5fA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

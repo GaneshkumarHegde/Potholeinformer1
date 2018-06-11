@@ -1,0 +1,43 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\WINDOWS\\Downloads\\Potholeinformer_v1\\Potholeinformer\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-he\\values-he.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\WINDOWS\\.gradle\\caches\\transforms-1\\files-1.1\\mapbox-android-navigation-0.10.0.aar\\347bff65b39fa1d08c9a4167493cbfd3\\res\\values-he\\values-he.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,126,180,234",
+                        "endColumns": "70,53,53,69",
+                        "endOffsets": "121,175,229,299"
+                    },
+                    "to": {
+                        "startLines": "2,3,7,17",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,126,381,996",
+                        "endColumns": "70,53,53,69",
+                        "endOffsets": "121,175,430,1061"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\WINDOWS\\.gradle\\caches\\transforms-1\\files-1.1\\mapbox-android-navigation-ui-0.10.0.aar\\6c6c433eb172ebb44e046df612cb6b49\\res\\values-he\\values-he.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,118,180,256,316,392,459,525,589,648,713,774,817,861,918",
+                        "endColumns": "62,61,75,59,75,66,65,63,58,64,60,42,43,56,44",
+                        "endOffsets": "113,175,251,311,387,454,520,584,643,708,769,812,856,913,958"
+                    },
+                    "to": {
+                        "startLines": "4,5,6,8,9,10,11,12,13,14,15,16,18,19,20",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "180,243,305,435,495,571,638,704,768,827,892,953,1066,1110,1167",
+                        "endColumns": "62,61,75,59,75,66,65,63,58,64,60,42,43,56,44",
+                        "endOffsets": "238,300,376,490,566,633,699,763,822,887,948,991,1105,1162,1207"
+                    }
+                }
+            ]
+        }
+    ]
+}

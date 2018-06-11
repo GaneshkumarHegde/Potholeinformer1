@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mapbox="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.project.hackathon.Potholeinformer.MainActivity">
+
+    <com.mapbox.mapboxsdk.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        mapbox:mapbox_cameraTargetLat="38.9098"
+        mapbox:mapbox_cameraTargetLng="-77.0295"
+        mapbox:mapbox_cameraZoom="12"
+        mapbox:mapbox_styleUrl="mapbox://styles/mapbox/streets-v10" />
+    <Button
+
+        android:id="@+id/startButton"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:visibility="gone"
+        android:text="Start navigation"
+        android:background="@color/mapboxGrayLight"
+        android:textColor="@color/mapboxWhite"
+        android:enabled="false"
+        android:layout_alignParentBottom="true"/>
+
+    <RelativeLayout
+        android:id="@+id/relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            style="@style/editText_style"
+            android:id="@+id/txt_initial_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:hint=" From "
+            android:fontFamily="casual"
+            android:textColorHint="#000000"
+            android:textColor="#000000"
+            android:autoLink="all"/>
+
+        <EditText
+            style="@style/editText_style"
+            android:id="@+id/txt_final_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:hint=" To "
+            android:textColorHint="#000000"
+            android:fontFamily="casual"
+            android:textColor="#000000"
+            android:layout_below="@id/txt_initial_location"
+            android:autoLink="all"/>
+        <Button
+            style="@style/button_style"
+            android:text="Get Direction"
+            android:id="@+id/process"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_final_location"
+            />
+    </RelativeLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:layout_alignParentEnd="true"
+        android:id="@+id/floating_button"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_navigation"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <android.support.design.widget.FloatingActionButton
+        android:layout_alignParentLeft="true"
+        android:id="@+id/floating_cancel"
+        android:layout_margin="10dp"
+        android:src="@drawable/cancel"
+        android:visibility="invisible"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <android.support.design.widget.FloatingActionButton
+        android:layout_above="@id/floating_button"
+        android:layout_alignParentRight="true"
+        android:id="@+id/floating_mylocation"
+        android:layout_margin="10dp"
+        android:src="@drawable/target"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/signoutbtn"
+        android:layout_width="105dp"
+        android:layout_height="wrap_content"
+        android:text="Sign out"
+        android:layout_above="@+id/addpotholebtn"
+        style="@style/button_style"
+        android:layout_marginLeft="29dp"
+        android:onClick="signOut"
+        />
+
+    <Button
+        android:id="@+id/addpotholebtn"
+        style="@style/button_style"
+        android:layout_width="105dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="29dp"
+        android:onClick="addPothole"
+        android:text="Add pothole" />
+
+    <Button
+        android:id="@+id/addpoholeelse"
+        style="@style/button_style"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:onClick="addPotholeelse"
+        android:text="Add pothole elsewhere" />
+</RelativeLayout>

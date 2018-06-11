@@ -1,0 +1,36 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\WINDOWS\\Downloads\\Potholeinformer_v1\\Potholeinformer\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-id\\values-id.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\WINDOWS\\.gradle\\caches\\transforms-1\\files-1.1\\mapbox-android-navigation-ui-0.10.0.aar\\6c6c433eb172ebb44e046df612cb6b49\\res\\values-id\\values-id.xml",
+                    "from": {
+                        "startLines": "2,3,4",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,105,157",
+                        "endColumns": "49,51,52",
+                        "endOffsets": "100,152,205"
+                    },
+                    "to": {
+                        "startLines": "4,5,6",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "184,234,286",
+                        "endColumns": "49,51,52",
+                        "endOffsets": "229,281,334"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\WINDOWS\\.gradle\\caches\\transforms-1\\files-1.1\\mapbox-android-navigation-0.10.0.aar\\347bff65b39fa1d08c9a4167493cbfd3\\res\\values-id\\values-id.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,126",
+                        "endColumns": "70,57",
+                        "endOffsets": "121,179"
+                    }
+                }
+            ]
+        }
+    ]
+}
