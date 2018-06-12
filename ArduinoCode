@@ -1,0 +1,238 @@
+#include <TinyGPS.h>
+#include <SoftwareSerial.h>
+#include <ESP8266WiFi.h>
+#include <ArduinoJson.h>
+#include <FirebaseArduino.h>
+#include <WiFiUdp.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define FIREBASE_HOST "potholeproject-c948d.firebaseio.com"
+#define FIREBASE_AUTH "JdvulR7AwMNSF7ymqPq6kDk4eQ6sPOX1zyVxI9Y4"
+#define WIFI_SSID "The Might"
+#define WIFI_PASSWORD "adgr@1357"  
+
+unsigned int localPort = 2390;
+IPAddress timeServerIP;
+const char* ntpServerName = "asia.pool.ntp.org";
+const int NTP_PACKET_SIZE = 48;
+byte packetBuffer[ NTP_PACKET_SIZE];
+WiFiUDP udp;
+
+SoftwareSerial GPSModule(4,5); //connect Tx of gps to D2, Rx of gps to D1
+
+const int groundpin = 18;
+const int powerpin = 19;
+int level;
+const int zpin = A0;
+int count=0;
+int c=0;
+int pos;
+int stringplace = 0;
+int updates=0;
+String nmea[12];
+String labels[12] {"Time: ", "Lat: ", "N/S: ", "Lng: ", "E/W: ", "Fix: ", "Sats: ", "HDP: ", "Alt: ", "Metres: ", "MSL: ", "Metres: "};
+int n=0;
+char randomChars[] = {'a', 'b','c', 'd', 'e', 'f', 'g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+const byte randLength = sizeof(randomChars) / sizeof(randomChars[0]);
+char notes[20]; 
+
+void setup() {
+    pinMode(groundpin, OUTPUT);
+    pinMode(powerpin, OUTPUT);
+    digitalWrite(groundpin, LOW);
+    digitalWrite(powerpin, HIGH);
+
+    Serial.begin(115200);
+    GPSModule.begin(9600);
+   StaticJsonBuffer<200> jsonBuffer;
+   JsonObject& root= jsonBuffer.createObject();
+ 
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  Serial.print("connecting");
+  while (WiFi.status() != WL_CONNECTED) {
+    Serial.print(".");
+    delay(500);
+  }
+  Serial.println();
+  Serial.print("connected: ");
+  Serial.println(WiFi.localIP());
+  
+  Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
+
+  udp.begin(localPort);
+}
+
+void loop() {
+  StaticJsonBuffer<200> jsonBuffer;
+  JsonObject& root=jsonBuffer.createObject(); 
+              
+    while (GPSModule.available() > 0)
+     {
+      GPSModule.read();
+    }
+    long x=analogRead(zpin);
+    Serial.println(x);
+    delay(500);
+    
+    if(x>count+30 && c!=0)
+      {       
+        level=1;
+        if(x>count+60)  level=2;
+        if(x>count+90)  level=3;
+          
+        //if(!GPSModule.find("$GPGGA,")) {
+        //  Serial.print("Waiting for GPS"); }
+          
+        //if (GPSModule.find("$GPGGA,")) 
+          if(true)
+          {
+            String tempMsg = GPSModule.readStringUntil('\n');
+            for (int i = 0; i < tempMsg.length(); i++){
+              if (tempMsg.substring(i, i + 1) == ",") {
+                    nmea[pos] = tempMsg.substring(stringplace, i);
+                    stringplace = i + 1;
+                    pos++;
+                    }
+              if (i == tempMsg.length() - 1) {
+                    nmea[pos] = tempMsg.substring(stringplace, i);
+                    }
+              }updates++;
+            nmea[1] = ConvertLat(); 
+            nmea[3] = ConvertLng();
+
+            WiFi.hostByName(ntpServerName, timeServerIP);
+            sendNTPpacket(timeServerIP);
+            int cb = udp.parsePacket();
+            unsigned long epoch;
+            /*int i, n;  
+
+              char dst[10]="" ;
+             srand(time(NULL));               /* init seed */
+            
+            /* for (i = 0; i < 10; )
+               if ((n = rand()) < 'A' && n > 'Z')
+                   dst[i++] = n;
+              dst[9] = 0;      
+             Serial.println(dst);*/
+            if (!cb)
+              Serial.println("waiting...");
+            else {
+              udp.read(packetBuffer, NTP_PACKET_SIZE); // read the packet into the buffer
+              unsigned long highWord = word(packetBuffer[40], packetBuffer[41]);
+              unsigned long lowWord = word(packetBuffer[42], packetBuffer[43]);
+              unsigned long secsSince1900 = highWord << 16 | lowWord;
+              const unsigned long seventyYears = 2208988800UL;
+              epoch = secsSince1900 - seventyYears;
+              Serial.println(epoch);
+            }
+
+  
+        int  randomKey;    
+for ( randomKey = 0; randomKey < 20 ; randomKey++)
+  
+    notes[randomKey] = randomChars[random(0, randLength)];
+    notes[randomKey + 1] = '\0';
+    
+  
+  Serial.println(notes);
+             
+             
+              
+            
+             root["id"]=n;
+             root["lattitude"]=nmea[1];
+             root["longitude"]=nmea[3];
+             root["timestamp"]=epoch; 
+             root["value"]="False";
+             root["key"] = notes;
+             Firebase.set(notes,root);
+             if (Firebase.failed()) {
+              Serial.print("setting /number failed:");
+              Serial.println(Firebase.error());  
+              return;
+              }delay(1000);
+              
+          }
+          
+          
+      }
+    count=x; 
+    c++;
+    stringplace = 0;
+    pos = 0;
+}
+//loop ends
+
+
+
+//user defined methods 
+    String ConvertLat() {
+      String posneg = "";
+      if (nmea[2] == "S") {
+        posneg = "-";
+      }
+      String latfirst;
+      float latsecond;
+      for (int i = 0; i < nmea[1].length(); i++) {
+        if (nmea[1].substring(i, i + 1) == ".") {
+          latfirst = nmea[1].substring(0, i - 2);
+          latsecond = nmea[1].substring(i - 2).toFloat();
+        }
+      }
+      latsecond = latsecond / 60;
+      String CalcLat = "";
+    
+      char charVal[9];
+      dtostrf(latsecond, 4, 6, charVal);
+      for (int i = 0; i < sizeof(charVal); i++)
+      {
+        CalcLat += charVal[i];
+      }
+      latfirst += CalcLat.substring(1);
+      latfirst = posneg += latfirst;
+      return latfirst;
+    }
+    
+    String ConvertLng() {
+      String posneg = "";
+      if (nmea[4] == "W") {
+        posneg = "-";
+      }
+    
+      String lngfirst;
+      float lngsecond;
+      for (int i = 0; i < nmea[3].length(); i++) {
+        if (nmea[3].substring(i, i + 1) == ".") {
+          lngfirst = nmea[3].substring(0, i - 2);
+          lngsecond = nmea[3].substring(i - 2).toFloat();
+    
+        }
+      }
+      lngsecond = lngsecond / 60;
+      String CalcLng = "";
+      char charVal[9];
+      dtostrf(lngsecond, 4, 6, charVal);
+      for (int i = 0; i < sizeof(charVal); i++)
+      {
+        CalcLng += charVal[i];
+      }
+      lngfirst += CalcLng.substring(1);
+      lngfirst = posneg += lngfirst;
+      return lngfirst;
+    }
+    
+    void sendNTPpacket(IPAddress& address) {
+      memset(packetBuffer, 0, NTP_PACKET_SIZE);
+      packetBuffer[0] = 0b11100011;   // LI, Version, Mode
+      packetBuffer[1] = 0;     // Stratum, or type of clock
+      packetBuffer[2] = 6;     // Polling Interval
+      packetBuffer[3] = 0xEC;  // Peer Clock Precision
+      packetBuffer[12]  = 49;
+      packetBuffer[13]  = 0x4E;
+      packetBuffer[14]  = 49;
+      packetBuffer[15]  = 52;
+      udp.beginPacket(address, 123); //NTP requests are to port 123
+      udp.write(packetBuffer, NTP_PACKET_SIZE);
+      udp.endPacket();
+    }
