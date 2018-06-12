@@ -14,6 +14,11 @@ and automatically
 • Identify the fake information and clean the data and take actions
 accordingly
 • Build a sample navigation application with augmented pothole
-information
+information  
+
+Hardware Specifications:
+NodeMCU- ESP8266
+Accelerometer- GY61
+GPS -skylab
 
 
